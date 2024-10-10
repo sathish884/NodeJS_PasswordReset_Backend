@@ -1,35 +1,34 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const authRoutes = require("./routes/routes");
+const AuthRoutes = require("./routes/routes");
 // Used to parse JSON payloads in incoming request
 // make it available in req.body 
-const bodyParser = require("body-parser");
-const cors = require('cors');
-const dotenv = require('dotenv');
+const bodyparser = require("body-parser");
+const corse = require("cors");
+require("dotenv").config();
 
-dotenv.config();
 const app = express();
+app.use(corse());
+app.use(bodyparser.json());
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
+const PORT = process.env.PORT;
 
 // Routes
-app.use('/api', authRoutes);
+app.use('/api', AuthRoutes);
 
 app.get("/", (req, res) => {
     res.json({ message: "Password Reset flow Deployed Successfully" });
 })
 
-const PORT = process.env.PORT;
-
 mongoose.connect(process.env.MONGODB_URI).then(() => {
-    console.log("MongoDB was connected");
+    console.log("MongoDB is connected");
+
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     })
+
 }).catch(error => {
-    console.log("Connection failed", error.message);
-});
+    console.log("Connection was filed ", error.message);
+})
 
 
