@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/api', authRoutes);
 
 app.get("/", (req, res) => {
     res.json({ message: "Password Reset flow Deployed Successfully" });
